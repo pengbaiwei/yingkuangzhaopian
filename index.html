@@ -645,12 +645,6 @@ $id('saveWork').onclick=async()=>{
  try{await worksAction('put',{id:Date.now()+'-'+Math.random().toString(36).slice(2),name:name.trim(),savedAt:Date.now(),state:snapshot()});status.textContent='作品已保存到本机历史作品。'}catch(e){alert('保存失败，可能是本机存储空间不足：'+e.message)}
 };
 $id('openWorks').onclick=()=>{renderWorks();$id('worksDialog').showModal()};$id('headerWorks').onclick=()=>$id('openWorks').click();
-const worksDialog=$id('worksDialog');
-function closeWorksSafely(){try{worksDialog.close()}catch(e){worksDialog.removeAttribute('open')}}
-$id('closeWorks').addEventListener('click',closeWorksSafely);
-$id('closeWorksBottom').addEventListener('click',closeWorksSafely);
-worksDialog.addEventListener('click',event=>{if(event.target===worksDialog)closeWorksSafely()});
-worksDialog.addEventListener('cancel',event=>{event.preventDefault();closeWorksSafely()});
 function snapshot(){
  saveCurrent();
  return {active,auto,serial,global:Object.fromEntries(globalIds.map(k=>[k,$id(k)?.value])),items:photos.map(p=>({blob:p.blob,name:p.name,settings:{...p.settings}}))};
@@ -752,4 +746,16 @@ cn.addEventListener('input',schedule);mode.addEventListener('change',schedule);e
   });
  });
 })();
-</script><dialog id="worksDialog" class="worksDialog"><div class="worksHead"><strong>历史作品</strong><button type="button" id="closeWorks" aria-label="关闭历史作品" title="关闭"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5 19 19M19 5 5 19"/></svg></button></div><p class="hint">作品仅保存在此设备的浏览器中。清除网站数据可能导致作品丢失。</p><div id="worksList"></div><button type="button" id="closeWorksBottom" class="worksCloseBottom">关闭窗口</button></dialog></body></html>
+</script><dialog id="worksDialog" class="worksDialog"><div class="worksHead"><strong>历史作品</strong><button type="button" id="closeWorks" aria-label="关闭历史作品" title="关闭"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5 19 19M19 5 5 19"/></svg></button></div><p class="hint">作品仅保存在此设备的浏览器中。清除网站数据可能导致作品丢失。</p><div id="worksList"></div><button type="button" id="closeWorksBottom" class="worksCloseBottom">关闭窗口</button></dialog><script id="v46-dialog-close">
+(function(){
+ const dialog=document.getElementById('worksDialog');
+ if(!dialog)return;
+ function close(){if(dialog.open){try{dialog.close()}catch(e){dialog.removeAttribute('open')}}}
+ for(const id of ['closeWorks','closeWorksBottom']){
+  const button=document.getElementById(id);
+  if(button)button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();close()});
+ }
+ dialog.addEventListener('click',event=>{if(event.target===dialog)close()});
+ dialog.addEventListener('cancel',event=>{event.preventDefault();close()});
+})();
+</script></body></html>
