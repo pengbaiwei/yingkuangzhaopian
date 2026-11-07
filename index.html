@@ -225,8 +225,14 @@ body.previewFullscreen .preview canvas{max-width:100%!important;max-height:100%!
 .captionCaseTools button{min-width:0;min-height:42px;padding:8px 4px;border:1px solid #dededb;background:#f7f7f5;color:#292929;border-radius:8px;font-size:12px;white-space:nowrap}
 .captionCaseTools button:active{background:#e5e5e1}
 @media(max-width:720px){.panel .group .captionCaseTools{width:100%!important;min-width:0!important}.captionCaseTools button{font-size:12px!important}}
+</style><style id="v39">
+.preview{position:relative!important}
+.previewActions{position:absolute;z-index:12;left:12px;right:12px;top:12px;display:flex;justify-content:center;gap:7px;pointer-events:none}
+.previewActions button{pointer-events:auto;width:auto;min-width:0;padding:8px 11px;min-height:36px;border-radius:22px;background:#ffffffeb;color:#222;border:1px solid #ddd;font-size:12px;box-shadow:0 2px 8px #00000012}
+.previewActions button:disabled{opacity:.35}
+@media(max-width:720px){.previewActions{left:8px;right:8px;top:8px;gap:6px}.previewActions button{font-size:12px;padding:8px 10px;min-height:36px}}
 </style></head><body>
-<header><div><h1>映框 <small>YINGKUANG</small></h1><small>为照片留一点空间</small></div><div class="headerActions"><button id="fullPreview" type="button">全屏预览</button><button class="primary" id="topExport">导出照片</button></div></header><main class="layout"><section><div class="preview"><canvas id="canvas" width="720" height="900"></canvas></div><p class="hint" style="padding:0 15px">可在画布上拖动文字或 PNG 水印。图片仅在本机处理。</p></section><nav id="toolTabs" aria-label="编辑工具"><button class="active" data-tab="0">照片</button><button data-tab="1">边框</button><button data-tab="2">文字</button><button data-tab="3">水印</button><button data-tab="4">模板/导出</button></nav><aside class="panel">
+<header><div><h1>映框 <small>YINGKUANG</small></h1><small>为照片留一点空间</small></div><div class="headerActions"><button id="fullPreview" type="button">全屏预览</button><button class="primary" id="topExport">导出照片</button></div></header><main class="layout"><section><div class="preview"><div class="previewActions"><button type="button" id="previewAdd" aria-label="添加照片">＋ 添加照片</button><button type="button" id="undoEdit" aria-label="撤回上一步" disabled>↶ 撤回</button><button type="button" id="redoEdit" aria-label="恢复下一步" disabled>↷ 前进</button></div><canvas id="canvas" width="720" height="900"></canvas></div><p class="hint" style="padding:0 15px">可在画布上拖动文字或 PNG 水印。图片仅在本机处理。</p></section><nav id="toolTabs" aria-label="编辑工具"><button class="active" data-tab="0">照片</button><button data-tab="1">边框</button><button data-tab="2">文字</button><button data-tab="3">水印</button><button data-tab="4">模板/导出</button></nav><aside class="panel">
 <div class="group"><h2>01 / 照片</h2><div class="buttons"><label class="upload primary" for="photo">导入照片</label><label class="upload" for="wmFile">导入 PNG</label></div><input class="hidden" id="photo" type="file" accept="image/*" multiple><div class="batchBar"><span id="batchCount">未导入照片</span><button type="button" id="autoLayout" class="layoutPrimaryAction">✦ 生成多样排版</button><button type="button" id="clearBatch">清空</button></div><div id="batchThumbs" class="batchThumbs"></div><div class="photoManage"><button type="button" id="moveLeft">← 左移</button><button type="button" id="moveRight">右移 →</button><button type="button" id="setCover">置顶为封面</button><button type="button" id="deleteSelected">删除选中照片</button></div><p class="hint" id="photoManageHint">点选缩略图，再删除或调整顺序。也可按住图片拖动。</p><p class="hint">最多30张，默认3:4画布。随机排版时逐张分析照片色彩，自动生成独立背景色；可单张修改。封面居中大图，文字保留安全距离。</p><input class="hidden" id="wmFile" type="file" accept="image/png,image/*"></div>
 <div class="group borderGroup"><h2>02 / 画布与边框</h2><label>画布比例（批量统一）</label><select id="ratio"><option value="original">原图比例</option><option value="1">1 : 1</option><option value=".75" selected>3 : 4（默认）</option><option value=".8">4 : 5</option><option value=".5625">9 : 16</option><option value="1.5">3 : 2</option></select><label>批量排版方式</label><select id="layoutMode"><option value="varied">多样化排版（不规则留白）</option><option value="minimal">极简系列（有节奏的留白）</option><option value="editorial">杂志系列（大小与偏移变化）</option></select><button type="button" id="regenerateLayouts" style="width:100%;margin-top:9px">重新生成多样排版</button><label>边框颜色</label><div class="colorEditor"><div class="colorSwatches" data-target="bg"><button type="button" class="swatch" data-color="#FFFFFF" style="--swatch:#FFFFFF" aria-label="#FFFFFF"></button><button type="button" class="swatch" data-color="#F7F6F2" style="--swatch:#F7F6F2" aria-label="#F7F6F2"></button><button type="button" class="swatch" data-color="#E8E2D7" style="--swatch:#E8E2D7" aria-label="#E8E2D7"></button><button type="button" class="swatch" data-color="#D4C4AE" style="--swatch:#D4C4AE" aria-label="#D4C4AE"></button><button type="button" class="swatch" data-color="#222222" style="--swatch:#222222" aria-label="#222222"></button><button type="button" class="swatch" data-color="#000000" style="--swatch:#000000" aria-label="#000000"></button><button type="button" class="swatch" data-color="#9C9C9C" style="--swatch:#9C9C9C" aria-label="#9C9C9C"></button><button type="button" class="swatch" data-color="#7B8C75" style="--swatch:#7B8C75" aria-label="#7B8C75"></button><button type="button" class="swatch" data-color="#8CA6BA" style="--swatch:#8CA6BA" aria-label="#8CA6BA"></button><button type="button" class="swatch" data-color="#C7A5A5" style="--swatch:#C7A5A5" aria-label="#C7A5A5"></button><button type="button" class="swatch" data-color="#CBAA6C" style="--swatch:#CBAA6C" aria-label="#CBAA6C"></button><button type="button" class="swatch" data-color="#7D6B93" style="--swatch:#7D6B93" aria-label="#7D6B93"></button></div><div class="photoPalette"><div class="paletteHeading"><strong>照片智能配色</strong><button type="button" id="refreshPalette">重新提取</button></div><p class="paletteHelp">导入照片后自动识别主要颜色，点击色块应用到边框</p><div id="photoPaletteSwatches" class="photoPaletteSwatches"><span class="paletteEmpty">导入照片后显示配色</span></div></div><div class="pickerControls"><button id="openPicker" type="button">自由取色器</button><button id="samplePhoto" type="button">从照片吸色</button></div><div id="pickerPanel" class="pickerPanel" hidden><canvas id="svPicker" width="320" height="180" aria-label="选择饱和度和明度"></canvas><label>色相 <span id="hueLabel">0°</span></label><input id="hueSlider" type="range" min="0" max="360" value="0"></div><div class="hexRow"><span>HEX</span><input id="bg" class="hexInput" type="text" maxlength="7" spellcheck="false" value="#FFFFFF"><span class="colorPreview" id="bgPreview"></span></div></div><label>照片边角（批量同步）</label><select id="photoCorner"><option value="0" selected>直角</option><option value="12">小圆角</option><option value="28">中圆角</option><option value="50">大圆角</option></select><label>边框留白 <span id="marginV"></span></label><input id="margin" type="range" min="0" max="35" value="8"><label>照片缩放 <span id="zoomV"></span></label><input id="zoom" type="range" min="20" max="250" value="100"><label>照片水平位置</label><input id="photoX" type="range" min="-100" max="100" value="0"><label>照片垂直位置</label><input id="photoY" type="range" min="-100" max="100" value="0"></div>
 <div class="group"><h2>03 / 文字排版</h2><div class="translationPanel"><strong>中英文自动翻译</strong><label>文字模式</label><select id="languageMode"><option value="zh">仅中文</option><option value="en">仅英文</option><option value="both">中英文双语</option></select><p class="hint">在下方输入中文，选择英文或双语时自动翻译；翻译内容可单独修改。</p><label>英文翻译（可编辑）</label><textarea id="englishCaption" placeholder="输入中文后自动显示英文"></textarea><p id="translationStatus" class="hint" role="status">翻译使用在线服务；照片不上传。</p></div><label>自定义文案</label><textarea id="caption">PENGBAIWEI</textarea><div class="captionCaseTools" role="group" aria-label="英文大小写转换"><button type="button" data-case="upper">全部大写</button><button type="button" data-case="lower">全部小写</button><button type="button" data-case="sentence">句首大写</button></div><p class="hint">仅调整英文大小写，中文、数字和标点保持不变；修改后实时预览。</p><label>字体</label><label>字体应用方式（批量同步）</label><select id="fontMode"><option value="separate" selected>中英文字体分别选择</option><option value="sync">中英同步 · 以中文字体为准</option></select><label>中文字体（批量同步）</label><select id="font"><optgroup label="中文字体"><option value="sans">系统黑体 · 苹方</option><option value="serif">系统宋体</option><option value="sourceSerif">思源宋体</option><option value="sourceSans">思源黑体</option><option value="yahei">微软雅黑兼容</option><option value="wenkai">文楷 · 手写感</option></optgroup><optgroup label="SIGMA 风格 · 非官方字体"><option value="sigmaManrope">Manrope · 精密现代</option><option value="sigmaInter">Inter · 瑞士极简</option><option value="sigmaDM">DM Sans · 克制理性</option><option value="sigmaJakarta">Plus Jakarta Sans · 现代</option><option value="sigmaGeist">Geist · 几何科技</option><option value="sigmaOutfit">Outfit · 摄影标题</option></optgroup><optgroup label="时尚杂志"><option value="notoSerif">Noto Serif · 经典杂志</option><option value="bodoni">Bodoni Moda · 时装</option><option value="didot">Didot · 高级衬线</option><option value="cormorant">Cormorant Garamond · 艺术</option><option value="instrument">Instrument Serif · 艺术标题</option><option value="newsreader">Newsreader · 纪实文学</option><option value="playfair">Playfair Display · 编辑设计</option></optgroup><optgroup label="现代排版与手写"><option value="space">Space Grotesk · 实验排版</option><option value="ibm">IBM Plex Sans · 工业</option><option value="jost">Jost · 几何</option><option value="mono">等宽字体</option><option value="english">Georgia · 英文经典</option><option value="caveat">Caveat · 英文手写</option><option value="dancing">Dancing Script · 英文手写</option></optgroup></select><label>英文字体（批量同步）</label><select id="englishFont"><option value="sigmaManrope">Manrope · SIGMA 风格</option><option value="sigmaInter">Inter · 瑞士极简</option><option value="sigmaDM">DM Sans</option><option value="sigmaJakarta">Plus Jakarta Sans</option><option value="sigmaGeist">Geist</option><option value="sigmaOutfit">Outfit</option><option value="bodoni">Bodoni Moda</option><option value="cormorant">Cormorant Garamond</option><option value="instrument">Instrument Serif</option><option value="newsreader">Newsreader</option><option value="playfair">Playfair Display</option><option value="space">Space Grotesk</option><option value="ibm">IBM Plex Sans</option><option value="jost">Jost</option><option value="english">Georgia</option><option value="caveat">Caveat</option><option value="dancing">Dancing Script</option></select><p class="hint">SIGMA 风格为相似审美的开源字体，不是 SIGMA 官方定制字库。部分字体首次加载需联网。</p><label>字号 <span id="sizeV"></span></label><input id="size" type="range" min="12" max="100" value="28"><label>字距 <span id="spacingV"></span></label><input id="spacing" type="range" min="0" max="20" value="2"><label>文字颜色</label><div class="colorEditor"><div class="colorSwatches" data-target="textColor"><button type="button" class="swatch" data-color="#FFFFFF" style="--swatch:#FFFFFF" aria-label="#FFFFFF"></button><button type="button" class="swatch" data-color="#F7F6F2" style="--swatch:#F7F6F2" aria-label="#F7F6F2"></button><button type="button" class="swatch" data-color="#E8E2D7" style="--swatch:#E8E2D7" aria-label="#E8E2D7"></button><button type="button" class="swatch" data-color="#D4C4AE" style="--swatch:#D4C4AE" aria-label="#D4C4AE"></button><button type="button" class="swatch" data-color="#222222" style="--swatch:#222222" aria-label="#222222"></button><button type="button" class="swatch" data-color="#000000" style="--swatch:#000000" aria-label="#000000"></button><button type="button" class="swatch" data-color="#9C9C9C" style="--swatch:#9C9C9C" aria-label="#9C9C9C"></button><button type="button" class="swatch" data-color="#7B8C75" style="--swatch:#7B8C75" aria-label="#7B8C75"></button><button type="button" class="swatch" data-color="#8CA6BA" style="--swatch:#8CA6BA" aria-label="#8CA6BA"></button><button type="button" class="swatch" data-color="#C7A5A5" style="--swatch:#C7A5A5" aria-label="#C7A5A5"></button><button type="button" class="swatch" data-color="#CBAA6C" style="--swatch:#CBAA6C" aria-label="#CBAA6C"></button><button type="button" class="swatch" data-color="#7D6B93" style="--swatch:#7D6B93" aria-label="#7D6B93"></button></div><div class="hexRow"><span>HEX</span><input id="textColor" class="hexInput" type="text" maxlength="7" spellcheck="false" value="#252525"><span class="colorPreview" id="textColorPreview"></span></div></div><label>文字水平位置</label><input id="textX" type="range" min="0" max="100" value="50"><label>文字垂直位置</label><input id="textY" type="range" min="0" max="100" value="95"><label>文字对齐</label><select id="align"><option value="center">居中</option><option value="left">左对齐</option><option value="right">右对齐</option></select></div>
@@ -405,7 +411,7 @@ function movePhoto(from,to){
 function removePhoto(index){
  const item=photos[index];if(!item)return;
  if(!confirm('确定删除第 '+(index+1)+' 张照片？手机相册中的原图不会删除。'))return;
- saveCurrent();photos.splice(index,1);URL.revokeObjectURL(item.url);
+ saveCurrent();photos.splice(index,1);
  if(index<active)active--;else if(index===active)active=Math.min(index,photos.length-1);
  active=Math.max(0,active);syncPhoto();status.textContent='已删除选中的照片。';
 }
@@ -454,10 +460,10 @@ $id('photo').addEventListener('change',async e=>{
 const files=Array.from(e.target.files||[]).filter(f=>f.type.startsWith('image/'));if(!files.length)return;
 const slots=30-photos.length;if(slots<=0){alert('最多30张，请先清空照片');e.target.value='';return}
 if(files.length>slots)alert('最多30张，本次只导入前 '+slots+' 张');
-let added=0;for(const file of files.slice(0,slots)){try{const url=URL.createObjectURL(file),img=await load(file);photos.push({img,url,name:file.name,settings:{margin:'8',zoom:'100',photoX:'0',photoY:'0',caption:$id('caption').value,englishCaption:'',bg:$id('bg').value}});added++}catch(err){console.warn(err)}}
+let added=0;for(const file of files.slice(0,slots)){try{const url=URL.createObjectURL(file),img=await load(file);photos.push({img,url,blob:file,name:file.name,settings:{margin:'8',zoom:'100',photoX:'0',photoY:'0',caption:$id('caption').value,englishCaption:'',bg:$id('bg').value}});added++}catch(err){console.warn(err)}}
 if(added){active=photos.length-added;if(auto)generateLayouts();syncPhoto()}else alert('照片读取失败');e.target.value='';
 });
-$id('clearBatch').onclick=()=>{photos.forEach(p=>URL.revokeObjectURL(p.url));photos.length=0;active=0;photo=null;auto=false;$id('autoLayout').textContent='✦ 生成多样排版';syncPhoto()};
+$id('clearBatch').onclick=()=>{photos.length=0;active=0;photo=null;auto=false;$id('autoLayout').textContent='✦ 生成多样排版';syncPhoto()};
 function saveCurrent(){if(!current())return;current().settings ||= {};for(const k of perIds)current().settings[k]=$id(k).value;}function chooseBackground(img){
  try{
   const cv=document.createElement('canvas');cv.width=64;cv.height=64;
@@ -540,6 +546,74 @@ async function exportSeparateImages(){
  }catch(e){if(e.name!=='AbortError')alert('独立图片导出失败：'+e.message)}
  finally{active=saved.active;photo=saved.photo;for(const k of perIds)$id(k).value=saved.settings[k];btn.disabled=false;syncPhoto()}
 }
+// V3.9: Persist source blobs and editing state locally; browser tab eviction is common on iOS.
+const globalIds=['ratio','photoCorner','fontMode','font','englishFont','languageMode','size','spacing','textColor','textX','textY','align','wmSize','opacity','wmX','wmY','layoutMode'];
+const history=[],future=[];let restoring=false,ready=false,saveTimer=0,dbPromise=null,lastSignature='';
+$id('previewAdd').onclick=()=>$id('photo').click();
+function openDB(){
+ if(!('indexedDB'in window))return Promise.reject(Error('浏览器不支持本地项目存储'));
+ if(!dbPromise)dbPromise=new Promise((resolve,reject)=>{
+  const req=indexedDB.open('yingkuang-project',1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('data'))req.result.createObjectStore('data')};
+  req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+ });
+ return dbPromise;
+}
+async function readProject(){
+ const db=await openDB();
+ return new Promise((resolve,reject)=>{const tx=db.transaction('data','readonly'),req=tx.objectStore('data').get('current');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
+}
+async function writeProject(value){
+ const db=await openDB();
+ return new Promise((resolve,reject)=>{const tx=db.transaction('data','readwrite');tx.objectStore('data').put(value,'current');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
+}
+function snapshot(){
+ saveCurrent();
+ return {active,auto,serial,global:Object.fromEntries(globalIds.map(k=>[k,$id(k)?.value])),items:photos.map(p=>({blob:p.blob,name:p.name,settings:{...p.settings}}))};
+}
+function signature(state){return JSON.stringify({active:state.active,auto:state.auto,serial:state.serial,global:state.global,items:state.items.map(p=>({name:p.name,size:p.blob?.size,modified:p.blob?.lastModified,settings:p.settings}))})}
+function controls(){ $id('undoEdit').disabled=!history.length;$id('redoEdit').disabled=!future.length }
+let queued=Promise.resolve();
+function saveNow(){if(!ready||restoring)return;clearTimeout(saveTimer);const state=snapshot(),sig=signature(state);if(sig===lastSignature)return;lastSignature=sig;queued=queued.catch(()=>{}).then(()=>writeProject(state)).catch(e=>{status.textContent='本地自动保存失败，可能是手机存储空间不足：'+e.message})}
+function scheduleSave(){if(!ready||restoring)return;clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,600)}
+function record(){
+ if(!ready||restoring)return;
+ const state=snapshot(),sig=signature(state);
+ if(sig===lastSignature)return;
+ if(lastSignature&&history.length<35)history.push(previousState);
+ else if(lastSignature){history.shift();history.push(previousState)}
+ future.length=0;previousState=state;lastSignature=sig;controls();scheduleSave();
+}
+let previousState=null;
+async function applyState(state){
+ restoring=true;
+ try{
+  photos.forEach(p=>{if(p.url)URL.revokeObjectURL(p.url)});
+  photos.length=0;
+  for(const item of state.items||[]){
+   if(!item.blob)continue;
+   try{const img=await load(item.blob),url=URL.createObjectURL(item.blob);photos.push({img,url,blob:item.blob,name:item.name,settings:{...item.settings}})}catch(e){console.warn('无法恢复照片',e)}
+  }
+  for(const [k,v] of Object.entries(state.global||{})){if($id(k)&&v!==undefined)$id(k).value=v}
+  active=Math.max(0,Math.min(state.active||0,photos.length-1));auto=!!state.auto;serial=state.serial||0;
+  syncPhoto();
+ }finally{restoring=false}
+}
+async function undoRedo(from,to){
+ if(!from.length)return;
+ const target=from.pop();to.push(snapshot());await applyState(target);
+ previousState=snapshot();lastSignature=signature(previousState);controls();queued=queued.catch(()=>{}).then(()=>writeProject(previousState)).catch(()=>{});
+}
+$id('undoEdit').onclick=()=>undoRedo(history,future);
+$id('redoEdit').onclick=()=>undoRedo(future,history);
+const observed=document.querySelectorAll('.panel input,.panel select,.panel textarea');
+observed.forEach(el=>{if(el.type==='file')return;el.addEventListener('change',()=>{if(!restoring)record()});el.addEventListener('input',()=>{if(!restoring)scheduleSave()})});
+['autoLayout','regenerateLayouts','clearBatch','moveLeft','moveRight','setCover','deleteSelected'].forEach(id=>$id(id)?.addEventListener('click',()=>setTimeout(record,30)));
+thumbs.addEventListener('click',()=>setTimeout(record,50));
+$id('photo').addEventListener('change',()=>setTimeout(record,600));
+window.addEventListener('pagehide',saveNow);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveNow()});
+(async()=>{try{const state=await readProject();if(state&&state.items?.length){await applyState(state);status.textContent='已自动恢复上次编辑的 '+photos.length+' 张照片。'}else if(state){await applyState(state)}}catch(e){console.warn('自动恢复不可用',e);status.textContent='本机存储不可用，切换页面前请先导出。'}finally{ready=true;previousState=snapshot();lastSignature=signature(previousState);controls()}})();
 $id('exportImages').onclick=exportSeparateImages;
 $id('exportBatch').onclick=exportAll;
 })();
