@@ -574,8 +574,8 @@ $id('previewAdd').onclick=()=>$id('photo').click();
 function openDB(){
  if(!('indexedDB'in window))return Promise.reject(Error('浏览器不支持本地项目存储'));
  if(!dbPromise)dbPromise=new Promise((resolve,reject)=>{
-  const req=indexedDB.open('yingkuang-project',1);
-  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('data'))req.result.createObjectStore('data')};
+  const req=indexedDB.open('yingkuang-project',2);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('data'))req.result.createObjectStore('data');if(!req.result.objectStoreNames.contains('works'))req.result.createObjectStore('works',{keyPath:'id'})};
   req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
  });
  return dbPromise;
@@ -589,16 +589,7 @@ async function writeProject(value){
  return new Promise((resolve,reject)=>{const tx=db.transaction('data','readwrite');tx.objectStore('data').put(value,'current');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
 }
 const WORKS_STORE='works';
-async function projectStore(){
- const db=await openDB();
- if(db.objectStoreNames.contains(WORKS_STORE))return db;
- db.close();dbPromise=null;
- return new Promise((resolve,reject)=>{
-  const req=indexedDB.open('yingkuang-project',2);
-  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(WORKS_STORE))req.result.createObjectStore(WORKS_STORE,{keyPath:'id'})};
-  req.onsuccess=()=>{dbPromise=Promise.resolve(req.result);resolve(req.result)};req.onerror=()=>reject(req.error);
- });
-}
+async function projectStore(){return openDB()}
 async function worksAction(type,value){
  const db=await projectStore();
  return new Promise((resolve,reject)=>{
