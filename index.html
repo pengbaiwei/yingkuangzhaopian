@@ -206,7 +206,7 @@ $id('exportBatch').onclick=exportAll;
 </script><script id="v19-script">
 (function(){
 const $id=id=>document.getElementById(id),status=$id('aiStatus'),button=$id('aiGenerate'),batch=$id('aiBatch'),caption=$id('caption'),endpoint=$id('aiEndpoint'),style=$id('aiStyle');
-endpoint.value=localStorage.getItem('yingkuang_ai_endpoint')||'';
+endpoint.value=localStorage.getItem('yingkuang_ai_endpoint')||'https://yingkuangzhaopian.vercel.app/api/caption';
 endpoint.addEventListener('change',()=>localStorage.setItem('yingkuang_ai_endpoint',endpoint.value.trim()));
 const copies=new WeakMap();
 function setCaption(text){caption.value=text;caption.dispatchEvent(new Event('input',{bubbles:true}));}
