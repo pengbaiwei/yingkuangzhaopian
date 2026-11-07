@@ -190,6 +190,32 @@ body.previewFullscreen .preview canvas{max-width:100%!important;max-height:100%!
  .panel select,.panel input[type=text],.panel textarea{font-size:16px!important}
  #toolTabs button{min-width:0}
 }
+</style><style id="v37">
+/* Mobile: lock the preview, tabs and controls to one viewport-wide grid.
+   Border palette content must never determine the width of the parent layout. */
+@media(max-width:720px){
+ html{width:100%!important;overflow-x:hidden!important}
+ body{width:100%!important;min-width:0!important;max-width:none!important;overflow-x:hidden!important}
+ body>.layout{
+   display:grid!important;position:relative!important;
+   width:100vw!important;min-width:100vw!important;max-width:100vw!important;
+   margin:0!important;padding:0!important;left:0!important;right:auto!important;
+   grid-template-columns:minmax(0,100vw)!important;
+   justify-content:stretch!important;justify-items:stretch!important;
+   align-content:stretch!important;overflow:hidden!important;
+ }
+ body>.layout>section,body>.layout>#toolTabs,body>.layout>.panel{
+   position:relative!important;left:0!important;right:auto!important;
+   width:100vw!important;min-width:100vw!important;max-width:100vw!important;
+   margin:0!important;transform:none!important;justify-self:stretch!important;
+   box-sizing:border-box!important;
+ }
+ body>.layout>.panel{contain:none!important;overflow-x:hidden!important}
+ body>.layout>.panel .borderGroup{width:100%!important;min-width:0!important;max-width:100%!important}
+ body>.layout>.panel .borderGroup .colorEditor{width:100%!important;max-width:100%!important;min-width:0!important}
+ body>.layout>.panel .borderGroup .photoPalette,
+ body>.layout>.panel .borderGroup .pickerPanel{max-width:100%!important;min-width:0!important}
+}
 </style></head><body>
 <header><div><h1>映框 <small>YINGKUANG</small></h1><small>为照片留一点空间</small></div><div class="headerActions"><button id="fullPreview" type="button">全屏预览</button><button class="primary" id="topExport">导出照片</button></div></header><main class="layout"><section><div class="preview"><canvas id="canvas" width="720" height="900"></canvas></div><p class="hint" style="padding:0 15px">可在画布上拖动文字或 PNG 水印。图片仅在本机处理。</p></section><nav id="toolTabs" aria-label="编辑工具"><button class="active" data-tab="0">照片</button><button data-tab="1">边框</button><button data-tab="2">文字</button><button data-tab="3">水印</button><button data-tab="4">模板/导出</button></nav><aside class="panel">
 <div class="group"><h2>01 / 照片</h2><div class="buttons"><label class="upload primary" for="photo">导入照片</label><label class="upload" for="wmFile">导入 PNG</label></div><input class="hidden" id="photo" type="file" accept="image/*" multiple><div class="batchBar"><span id="batchCount">未导入照片</span><button type="button" id="autoLayout">生成多样排版</button><button type="button" id="clearBatch">清空</button></div><div id="batchThumbs" class="batchThumbs"></div><div class="photoManage"><button type="button" id="moveLeft">← 左移</button><button type="button" id="moveRight">右移 →</button><button type="button" id="setCover">置顶为封面</button><button type="button" id="deleteSelected">删除选中照片</button></div><p class="hint" id="photoManageHint">点选缩略图，再删除或调整顺序。也可按住图片拖动。</p><p class="hint">最多25张，默认3:4画布。随机排版时逐张分析照片色彩，自动生成独立背景色；可单张修改。封面居中大图，文字保留安全距离。</p><input class="hidden" id="wmFile" type="file" accept="image/png,image/*"></div>
