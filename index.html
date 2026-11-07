@@ -574,14 +574,14 @@ function snapshot(){
 function signature(state){return JSON.stringify({active:state.active,auto:state.auto,serial:state.serial,global:state.global,items:state.items.map(p=>({name:p.name,size:p.blob?.size,modified:p.blob?.lastModified,settings:p.settings}))})}
 function controls(){ $id('undoEdit').disabled=!history.length;$id('redoEdit').disabled=!future.length }
 let queued=Promise.resolve();
-function saveNow(){if(!ready||restoring)return;clearTimeout(saveTimer);const state=snapshot(),sig=signature(state);if(sig===lastSignature)return;lastSignature=sig;queued=queued.catch(()=>{}).then(()=>writeProject(state)).catch(e=>{status.textContent='本地自动保存失败，可能是手机存储空间不足：'+e.message})}
+function saveNow(){if(!ready||restoring)return;clearTimeout(saveTimer);const state=snapshot(),sig=signature(state);if(sig===lastSignature)return;queued=queued.catch(()=>{}).then(()=>writeProject(state)).catch(e=>{status.textContent='本地自动保存失败，可能是手机存储空间不足：'+e.message})}
 function scheduleSave(){if(!ready||restoring)return;clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,600)}
 function record(){
  if(!ready||restoring)return;
  const state=snapshot(),sig=signature(state);
  if(sig===lastSignature)return;
- if(lastSignature&&history.length<35)history.push(previousState);
- else if(lastSignature){history.shift();history.push(previousState)}
+ if(previousState&&history.length<35)history.push(previousState);
+ else if(previousState){history.shift();history.push(previousState)}
  future.length=0;previousState=state;lastSignature=sig;controls();scheduleSave();
 }
 let previousState=null;
@@ -607,7 +607,7 @@ async function undoRedo(from,to){
 $id('undoEdit').onclick=()=>undoRedo(history,future);
 $id('redoEdit').onclick=()=>undoRedo(future,history);
 const observed=document.querySelectorAll('.panel input,.panel select,.panel textarea');
-observed.forEach(el=>{if(el.type==='file')return;el.addEventListener('change',()=>{if(!restoring)record()});el.addEventListener('input',()=>{if(!restoring)scheduleSave()})});
+observed.forEach(el=>{if(el.type==='file')return;el.addEventListener('change',()=>{if(!restoring)record()});el.addEventListener('input',()=>{if(!restoring){record();scheduleSave()}})});
 ['autoLayout','regenerateLayouts','clearBatch','moveLeft','moveRight','setCover','deleteSelected'].forEach(id=>$id(id)?.addEventListener('click',()=>setTimeout(record,30)));
 thumbs.addEventListener('click',()=>setTimeout(record,50));
 $id('photo').addEventListener('change',()=>setTimeout(record,600));
